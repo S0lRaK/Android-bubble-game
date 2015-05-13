@@ -11,6 +11,7 @@ public class BubbleGenerator : MonoBehaviour {
 	void newBubble() {
 
 		Debug.Log ("Nueva burbuja");
+<<<<<<< HEAD
 		Rigidbody2D bubble1 = (Rigidbody2D) Instantiate(BlueBubble, new Vector2 (-0.2f, -7.0f), Quaternion.identity);
 
 		bubble1.GetComponent<Transform> ().localScale = new Vector2 (0.4f, 0.4f);
@@ -35,6 +36,12 @@ public class BubbleGenerator : MonoBehaviour {
 		
 		bubble5.GetComponent<Transform> ().localScale = new Vector2 (0.4f, 0.4f);
 		bubble5.gravityScale = -0.02f;
+=======
+		Rigidbody2D bubble = (Rigidbody2D) Instantiate(BlueBubble, new Vector2 (0.0f, 0.0f), Quaternion.identity);
+
+		bubble.GetComponent<Transform> ().localScale = new Vector2 (0.4f, 0.4f);
+		bubble.gravityScale = -0.2f;
+>>>>>>> 41186e66c5883130161f9d82cba9f33b95d2b164
 
 	}
 
