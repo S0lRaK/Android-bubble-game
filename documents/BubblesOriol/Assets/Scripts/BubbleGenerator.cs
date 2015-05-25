@@ -3,64 +3,67 @@ using System.Collections;
 
 public class BubbleGenerator : MonoBehaviour {
 
-	public Rigidbody2D BlueBubble;
-	public Rigidbody2D GreenBubble;
-	public Rigidbody2D RedBubble;
-	public Rigidbody2D YellowBubble;
+	public GameObject BlueBubble;
+	public GameObject GreenBubble;
+	public GameObject RedBubble;
+	public GameObject YellowBubble;
+	public int generationTime = 5;
 	private float startPosition;
-
-
-	void newBubble(float x) {
 	
+	void NewBubble() {
+	
+		GameObject bubble = null;
 
-		//Debug.Log (Camera.main.aspect);
-
-		Rigidbody2D bubble1 = (Rigidbody2D) Instantiate(BlueBubble, new Vector2 (x, -7.0f), Quaternion.identity);
-
-		bubble1.GetComponent<Transform> ().localScale = new Vector2 (0.4f, 0.4f);
-		bubble1.gravityScale = -0.02f;
-		/*
-		Rigidbody2D bubble2 = (Rigidbody2D) Instantiate(GreenBubble, new Vector2 (-1.5f, -9.0f), Quaternion.identity);
+		switch (Random.Range (0, 4)) {
 		
-		bubble2.GetComponent<Transform> ().localScale = new Vector2 (0.3f, 0.3f);
-		bubble2.gravityScale = -0.02f;
+			case 0:
 
-		Rigidbody2D bubble3 = (Rigidbody2D) Instantiate(RedBubble, new Vector2 (0.0f, -10.0f), Quaternion.identity);
-		
-		bubble3.GetComponent<Transform> ().localScale = new Vector2 (0.5f, 0.5f);
-		bubble3.gravityScale = -0.02f;
+				bubble = Instantiate(BlueBubble, new Vector2 (Random.Range(-2f, 2f), startPosition), Quaternion.identity) as GameObject;
+				break;
 
-		Rigidbody2D bubble4 = (Rigidbody2D) Instantiate(YellowBubble, new Vector2 (0.6f, -13.0f), Quaternion.identity);
-		
-		bubble4.GetComponent<Transform> ().localScale = new Vector2 (0.3f, 0.3f);
-		bubble4.gravityScale = -0.02f;
+			case 1:
+			
+				bubble = Instantiate(GreenBubble, new Vector2 (Random.Range(-2f, 2f), startPosition), Quaternion.identity) as GameObject;
+				break;
+				
+			case 2:
+				
+				bubble = Instantiate(RedBubble, new Vector2 (Random.Range(-2f, 2f), startPosition), Quaternion.identity) as GameObject;
+				break;
+				
+			case 3:
+				
+				bubble = Instantiate(YellowBubble, new Vector2 (Random.Range(-2f, 2f), startPosition), Quaternion.identity) as GameObject;
+				break;
 
-		Rigidbody2D bubble5 = (Rigidbody2D) Instantiate(GreenBubble, new Vector2 (-1.1f, -15.0f), Quaternion.identity);
-		
-		bubble5.GetComponent<Transform> ().localScale = new Vector2 (0.4f, 0.4f);
-		bubble5.gravityScale = -0.02f;
-*/
+		}
+
+
+		bubble.GetComponent<Bubble>().Initialize(Random.Range(1, 4), 5);
+
 	}
 
 	void Awake() {
 
-		startPosition = Camera.main.orthographicSize * -1;
+		startPosition = (Camera.main.orthographicSize * -1) - 1;
 
 	}
 
 	void Start() {
 
-		Debug.Log ("Inicio");
-		StartCoroutine (generateBubbles ());
+		StartCoroutine (GenerateBubbles ());
+		//NewBubble (); // Descomentar esta y comentar la de arriba para pruebas con una burbuja
 
 	}
 
-	IEnumerator generateBubbles(){
+	IEnumerator GenerateBubbles() {
+
 		while (true) {
-			newBubble (0.0f);
-			//newBubble (-1.0f);
+
+			NewBubble ();
 			
-			yield return new WaitForSeconds (5);	
+			yield return new WaitForSeconds (this.generationTime);
+
 		}
 
 	}
