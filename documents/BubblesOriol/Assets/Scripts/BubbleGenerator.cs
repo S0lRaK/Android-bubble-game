@@ -3,11 +3,13 @@ using System.Collections;
 
 public class BubbleGenerator : MonoBehaviour {
 
+	private Logic logic;
 	public GameObject BlueBubble;
 	public GameObject GreenBubble;
 	public GameObject RedBubble;
 	public GameObject YellowBubble;
-	public int generationTime = 5;
+	public int floatingSpeed = 5;
+	public float generationTime = 3f;
 	private float startPosition;
 	
 	void NewBubble() {
@@ -39,13 +41,14 @@ public class BubbleGenerator : MonoBehaviour {
 		}
 
 
-		bubble.GetComponent<Bubble>().Initialize(Random.Range(1, 4), 5);
+		bubble.GetComponent<Bubble>().Initialize(Random.Range(1, 4), floatingSpeed);
 
 	}
 
 	void Awake() {
 
 		startPosition = (Camera.main.orthographicSize * -1) - 1;
+		logic = Logic.Instance;
 
 	}
 
@@ -58,11 +61,20 @@ public class BubbleGenerator : MonoBehaviour {
 
 	IEnumerator GenerateBubbles() {
 
-		while (true) {
+		while (logic.IsRunning()) {
+
+			NewBubble ();
+
+			yield return new WaitForSeconds (2);
 
 			NewBubble ();
 			
 			yield return new WaitForSeconds (this.generationTime);
+
+			if (this.generationTime > 0.25f) this.generationTime -= 0.5f;
+			if (this.floatingSpeed < 40) this.floatingSpeed += 1;
+			Debug.Log ("Floating speed: " + this.floatingSpeed);
+			Debug.Log ("Generation speed: " + this.generationTime);
 
 		}
 
