@@ -65,11 +65,11 @@ public class BubbleGenerator : MonoBehaviour {
 
 			NewBubble (this.startPosition);
 			NewBubble (this.startPosition - 2f);
-			NewBubble (this.startPosition - 4f);
+			//NewBubble (this.startPosition - 4f);
 			
 			yield return new WaitForSeconds (this.generationTime);
 
-			if (this.generationTime > 0.5f) this.generationTime -= 0.5f;
+			if (this.generationTime > 0.5f) this.generationTime -= 0.1f;
 			if (this.floatingSpeed < 60) this.floatingSpeed += 1;
 			Debug.Log ("Floating speed: " + this.floatingSpeed);
 			Debug.Log ("Generation speed: " + this.generationTime);
